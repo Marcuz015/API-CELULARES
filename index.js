@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors'; 
-import * as Empresas from './service/empresa.js';
+import * as celulares from './service/celulares.js';
 
 const app = express();
 app.use(express.json());
@@ -10,16 +10,16 @@ app.get('/',(req,res)=>{
     res.status(200).json("{'result':'ok'}");
 })
 
-app.get('/empresa', async (req, res) => {
+app.get('/celulares', async (req, res) => {
     try {
         let nome = req.query.nome;
         let result;
 
         // Consultar o banco de dados
         if (nome) {
-            result = await Empresas.consultar(nome);
+            result = await celulares.consultar(nome);
         } else {
-            result = await Empresas.consultar();
+            result = await celulares.consultar();
         }
 
         // Verificar se há resultados
@@ -37,34 +37,34 @@ app.get('/empresa', async (req, res) => {
 });
 
 
-app.get('/empresa/:id', async (req, res) => {
+app.get('/celulares/:id', async (req, res) => {
     try {
         let id = req.params.id;
-        let result = await Empresas.consultarPorId(id);
+        let result = await celulares.consultarPorId(id);
         if (result.length > 0) {
             res.status(200).json(result);
         } else {
             res.status(404).json({ erro: 'Recurso não encontrado' });
         }
     } catch (error) {
-        console.error('Erro ao consultar empresa por ID:', error);
+        console.error('Erro ao consultar celulares por ID:', error);
         res.status(500).json({ erro: 'Erro interno do servidor' });
     }
 });
 
 
-app.post('/empresa',async(req,res)=>{
+app.post('/celulares',async(req,res)=>{
     try {
         const { nome, valor } = req.body; // Supondo que os dados enviados tenham campos 'nome' e 'valorDeMercado'
 
         // Chamar a função cadastrar com os dados recebidos
-        const novaEmpresa = await Empresas.cadastrar(nome, valor);
+        const novacelulares = await celulares.cadastrar(nome, valor);
 
-        // Enviar uma resposta com os dados da nova empresa cadastrada
-        res.status(201).json(novaEmpresa);
+        // Enviar uma resposta com os dados da nova celulares cadastrada
+        res.status(201).json(novacelulares);
     } catch (error) {
         // Lidar com erros, se houver algum
-        console.error('Erro ao cadastrar empresa:', error);
+        console.error('Erro ao cadastrar celulares:', error);
         res.status(500).json({ erro: 'Erro interno do servidor' });
     }
 })

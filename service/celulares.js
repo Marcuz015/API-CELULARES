@@ -3,7 +3,7 @@ import  pool  from '../data/index.js';
 export const consultar = async (filtro = '') => {
     try {
         const cx = await pool.getConnection();
-        const cmdSql = `SELECT * FROM empresa WHERE empresa.nome LIKE ?`;
+        const cmdSql = `SELECT * FROM celulares WHERE celulares.nome LIKE ?`;
         const [dados, meta_dados] = await cx.query(cmdSql, [`%${filtro}%`]);
         cx.release();
         return dados;
@@ -15,7 +15,7 @@ export const consultar = async (filtro = '') => {
 export const consultarPorId = async (id) => {
     try {
         const cx = await pool.getConnection();
-        const cmdSql = 'SELECT * FROM empresa WHERE empresa.id = ?';
+        const cmdSql = 'SELECT * FROM celulares WHERE celulares.id = ?';
         const [dados, meta_dados] = await cx.query(cmdSql, [id]);
         cx.release();
         return dados;
@@ -23,7 +23,7 @@ export const consultarPorId = async (id) => {
         throw error;
     }
 };
-
+/*
 export const cadastrar = async (Nome, ValorDeMercado) => {
     try {
         const cx = await pool.getConnection();
@@ -43,4 +43,4 @@ export const cadastrar = async (Nome, ValorDeMercado) => {
         throw error;
     }
 };
-
+*/
