@@ -55,10 +55,10 @@ app.get('/celulares/:id', async (req, res) => {
 
 app.post('/celulares',async(req,res)=>{
     try {
-        const { nome, valor } = req.body; // Supondo que os dados enviados tenham campos 'nome' e 'valorDeMercado'
+        const { nome, marca } = req.body; // Supondo que os dados enviados tenham campos 'nome' e 'marcaDeMercado'
 
         // Chamar a função cadastrar com os dados recebidos
-        const novacelulares = await celulares.cadastrar(nome, valor);
+        const novacelulares = await celulares.cadastrar(nome, marca);
 
         // Enviar uma resposta com os dados da nova celulares cadastrada
         res.status(201).json(novacelulares);
