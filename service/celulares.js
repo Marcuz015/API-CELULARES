@@ -47,12 +47,24 @@ export const cadastrar = async (nome, marca) => {
 Cadastrar usuario
 */
 
-export const cadastrarUser = async (nome, gmail, senha) => {
+export const consultarUser = async (filtro = '') => {
+    try {
+        const cx = await pool.getConnection();
+        const cmdSql = `SELECT * FROM user WHERE user.nome LIKE ?`;
+        const [dados, meta_dados] = await cx.query(cmdSql, [`%${filtro}%`]);
+        cx.release();
+        return dados;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const cadastrarUser = async (nome, senha, gmail) => {
     try {
         const cx = await pool.getConnection();
         // Inserir os dados na tabela empresa
-        const cmdSql = 'INSERT INTO user(nome, gmail, senha) VALUES (?, ?, ?)';
-        await cx.query(cmdSql, [nome, gmail, senha]);
+        const cmdSql = 'INSERT INTO user(nome, senha, gmail) VALUES (?, ?, ?)';
+        await cx.query(cmdSql, [nome, senha, gmail]);
 
         // Recuperar o último ID inserido
         const [result] = await cx.query('SELECT LAST_INSERT_ID() as lastId');
