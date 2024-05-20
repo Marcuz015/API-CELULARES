@@ -11,18 +11,6 @@ export const consultar = async (filtro = '') => {
         throw error;
     }
 };
-
-export const consultarPorId = async (id) => {
-    try {
-        const cx = await pool.getConnection();
-        const cmdSql = 'SELECT * FROM celulares WHERE celulares.id = ?';
-        const [dados, meta_dados] = await cx.query(cmdSql, [id]);
-        cx.release();
-        return dados;
-    } catch (error) {
-        throw error;
-    }
-};
 export const cadastrar = async (nome, marca) => {
     try {
         const cx = await pool.getConnection();

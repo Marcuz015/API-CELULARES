@@ -36,23 +36,6 @@ app.get('/celulares', async (req, res) => {
     }
 });
 
-
-app.get('/celulares/:id', async (req, res) => {
-    try {
-        let id = req.params.id;
-        let result = await celulares.consultarPorId(id);
-        if (result.length > 0) {
-            res.status(200).json(result);
-        } else {
-            res.status(404).json({ erro: 'Recurso não encontrado' });
-        }
-    } catch (error) {
-        console.error('Erro ao consultar celulares por ID:', error);
-        res.status(500).json({ erro: 'Erro interno do servidor' });
-    }
-});
-
-
 app.post('/celulares',async(req,res)=>{
     try {
         const { nome, marca } = req.body; // Supondo que os dados enviados tenham campos 'nome' e 'marcaDeMercado'
